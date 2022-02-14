@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='schedule',
             name='route',
-            field=models.ForeignKey(default=django.utils.timezone.now, on_delete=django.db.models.deletion.CASCADE, to='buupass.route'),
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='buupass.route'),
             preserve_default=False,
         ),
     ]

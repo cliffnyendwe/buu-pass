@@ -16,5 +16,5 @@ urlpatterns = [
     path('schedules/', views.ListSchedule.as_view()),
     path('schedule/<int:pk>/', views.DetailSchedule.as_view()),
 
-    path('rest-auth/', include('rest_auth.urls')),
+    # path('rest-auth/', include('rest_auth.urls')),
 ]
