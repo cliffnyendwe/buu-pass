@@ -27,7 +27,6 @@ class BusSerializer(serializers.ModelSerializer):
             'description',
             'bus_organisation',
             'capacity',
-            'route',
         )
         model = models.Bus
 

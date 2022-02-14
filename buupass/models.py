@@ -28,7 +28,7 @@ class Bus(models.Model):
     capacity = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return self.name
+        return self.bus_registration
 
         
 class Schedule(models.Model):
