@@ -1,5 +1,5 @@
 # api/urls.py
-from django.urls import path
+from django.urls import path, include
 
 from . import views
 
@@ -16,5 +16,5 @@ urlpatterns = [
     path('schedules/', views.ListSchedule.as_view()),
     path('schedule/<int:pk>/', views.DetailSchedule.as_view()),
 
-
+    path('rest-auth/', include('rest_auth.urls')),
 ]
