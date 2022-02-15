@@ -1,5 +1,6 @@
 from django.db import models
 from decimal import Decimal
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 class BusOrganisation(models.Model):
@@ -22,15 +23,29 @@ class Route(models.Model):
 
 
 class Bus(models.Model):
+    TWOBYTWO = '2-2'
+    THREEBYTWO = '3-2'
     bus_registration = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     bus_organisation = models.ForeignKey(BusOrganisation, related_name='bus', on_delete=models.CASCADE)
-    capacity = models.PositiveIntegerField(default=0)
+
+    capacity = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(67), MinValueValidator(14)])
+    available = models.DecimalField(decimal_places=0, max_digits=2)
+    layout  = ((TWOBYTWO,'Two By Two'), (THREEBYTWO, 'Three By Two'))
 
     def __str__(self):
         return self.bus_registration
 
-        
+class User(models.Model):
+    user_id = models.AutoField(primary_key=True)
+    email = models.EmailField()
+    name = models.CharField(max_length=30)
+    password = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.email
+
+
 class Schedule(models.Model):
     '''
     Class to define a bus schedule
@@ -43,3 +58,11 @@ class Schedule(models.Model):
 
     def __str__(self):
         return self.bus.bus_organisation.name + ' Bus No.' + str(self.bus.id) + ' Schedule No.' + str(self.id)
+
+class Booking(models.Model):
+    BOOKED = 'B'
+    CANCELLED = 'C'
+
+    TICKET_STATUSES = ((BOOKED, 'Booked'),
+                       (CANCELLED, 'Cancelled'),)
+
