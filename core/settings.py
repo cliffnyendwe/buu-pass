@@ -147,3 +147,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ]
 }
+
+USE_TZ = True

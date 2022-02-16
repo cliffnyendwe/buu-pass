@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Schedule
+from .models import Schedule, Route
 # Create your views here.
 def home(request):
     schedules = Schedule.objects.all()
@@ -83,20 +83,21 @@ def home(request):
 #         return render(request, 'buupass/signin.html')
 
 # @login_required(login_url='signin')
-# def findbus(request):
-#     context = {}
-#     if request.method == 'POST':
-#         source_r = request.POST.get('source')
-#         dest_r = request.POST.get('destination')
-#         date_r = request.POST.get('date')
-#         bus_list = Schedule.objects.filter(source=source_r, dest=dest_r, date=date_r)
-#         if bus_list:
-#             return render(request, 'buupass/list.html', locals())
-#         else:
-#             context["error"] = "Sorry no buses availiable"
-#             return render(request, 'buupass/findbus.html', context)
-#     else:
-#         return render(request, 'buupass/findbus.html')
+def findbus(request):
+    context = {}
+    if request.method == 'POST':
+        source_r = request.POST.get('source')
+        dest_r = request.POST.get('destination')
+        date_r = request.POST.get('date')
+        route = Route.objects.filter(departure_location=source_r, destination_location = dest_r).first()
+        bus_list = Schedule.objects.filter(route=route, departure_time=date_r)
+        if bus_list:
+            return render(request, 'buupass/list.html', locals())
+        else:
+            context["error"] = "Sorry no buses availiable"
+            return render(request, 'findbus.html', context)
+    else:
+        return render(request, 'findbus.html')
 
 
 # @login_required(login_url='signin')
