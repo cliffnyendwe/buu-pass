@@ -26,13 +26,16 @@ class Route(models.Model):
 class Bus(models.Model):
     TWOBYTWO = '2-2'
     THREEBYTWO = '3-2'
+    LAYOUTS  = ((TWOBYTWO,'Two By Two'), (THREEBYTWO, 'Three By Two'))
+
     bus_registration = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     bus_organisation = models.ForeignKey(BusOrganisation, related_name='bus', on_delete=models.CASCADE)
 
     capacity = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(67), MinValueValidator(14)])
-    available = models.DecimalField(decimal_places=0, max_digits=2)
-    layout  = ((TWOBYTWO,'Two By Two'), (THREEBYTWO, 'Three By Two'))
+    layout = models.CharField(choices=LAYOUTS, default=THREEBYTWO, max_length=3)
+    
+    # available = models.DecimalField(decimal_places=0, max_digits=2)
 
     def __str__(self):
         return self.bus_registration
@@ -62,10 +65,13 @@ class Schedule(models.Model):
 
 class Seat(models.Model):
     id = models.AutoField(primary_key=True)
-    bus = models.ForeignKey(Bus)
+    bus = models.ForeignKey(Bus, on_delete=models.CASCADE)
     # function to create seats
     @receiver(post_save, sender=Bus)
     def create_seats(sender, instance, created, **kwargs):
         if created:
             for seat in range (0, instance.capacity):
                 instance.seat_set.create( )
+    def __str__(self):
+        return self.bus.bus_organisation.name + ' Bus No.' + str(self.bus.bus_registration) + ' Seat No.' + str(self.id)
+
