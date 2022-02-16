@@ -1,7 +1,8 @@
 from django.db import models
 from decimal import Decimal
 from django.core.validators import MaxValueValidator, MinValueValidator
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 # Create your models here.
 class BusOrganisation(models.Model):
     '''
@@ -59,10 +60,12 @@ class Schedule(models.Model):
     def __str__(self):
         return self.bus.bus_organisation.name + ' Bus No.' + str(self.bus.id) + ' Schedule No.' + str(self.id)
 
-class Booking(models.Model):
-    BOOKED = 'B'
-    CANCELLED = 'C'
-
-    TICKET_STATUSES = ((BOOKED, 'Booked'),
-                       (CANCELLED, 'Cancelled'),)
-
+class Seat(models.Model):
+    id = models.AutoField(primary_key=True)
+    bus = models.ForeignKey(Bus)
+    # function to create seats
+    @receiver(post_save, sender=Bus)
+    def create_seats(sender, instance, created, **kwargs):
+        if created:
+            for seat in range (0, instance.capacity):
+                instance.seat_set.create( )
