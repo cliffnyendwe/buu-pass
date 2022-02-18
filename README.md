@@ -7,7 +7,7 @@ A task from buupass
 - clone this repo
 
 ```
-$ git clone https://github.com/BwanaQ/Buupass.git
+$ git clone https://github.com/cliffnyendwe/buu-pass.git
 ```
 
 ### Prerequisites
@@ -21,7 +21,7 @@ $ git clone https://github.com/BwanaQ/Buupass.git
 1. cd into the Buupass folder
 
 ```
-$ cd Buupass
+$ cd buupass
 ```
 
 2. Add a python 3 environment
@@ -65,14 +65,8 @@ to deploy to heroku simply create a project and attach your git hub repository
 
 ## Authors
 
-- **Tom Hunja**
+- **Cliff**
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-- Thanks to [Toptal](https://www.toptal.com/developers/gitignore/api/django) for a beautiful .gitignore file
-
-- Inspiration - My Technical Mentor Kelvin Onkundi and The Olympians Team MC38
